@@ -15,6 +15,7 @@ class NewsController extends Controller
     public function index()
     {
         //
+        return "Some text";
     }
 
     /**
