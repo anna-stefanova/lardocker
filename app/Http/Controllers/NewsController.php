@@ -8,6 +8,7 @@ class NewsController extends Controller
 {
     private $news;
 
+
     /**
      * @param $news
      */
@@ -36,4 +37,6 @@ class NewsController extends Controller
             'news' => $news,
         ]);
     }
+
+
 }
