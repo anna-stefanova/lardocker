@@ -60,7 +60,7 @@ class Controller extends BaseController
                 'author'      => $faker->userName(),
                 'status'      => 'DRAFT',
                 'description' => $faker->text(100),
-                'category_id' => rand(1, 6),
+                'category_id' => rand(1, count($this->categories)),
                 'created_at'  => now('Europe/Moscow'),
             ];
         }
