@@ -6,17 +6,6 @@ use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    private $news;
-
-    /**
-     * @param $news
-     */
-    public function __construct()
-    {
-        $this->news = $this->getNews();
-    }
-
-
     public function index()
     {
 
