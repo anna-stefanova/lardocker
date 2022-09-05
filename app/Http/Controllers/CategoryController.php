@@ -6,20 +6,12 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    //
-    public function index()
-    {
-        $categories = $this->categories;
-        return view('categories.index', [
-            'categories' => $categories,
-        ]);
-    }
 
     public function show(int $id)
     {
         return view('categories.show', [
             'category' => $this->getCategory($id),
-            'news' => $this->getNewsByCategory($id),
+            'newsList' => $this->getNewsByCategory($id),
         ]);
     }
 

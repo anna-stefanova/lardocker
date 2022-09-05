@@ -12,7 +12,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected $categories = [
+    protected array $categories = [
         [
             'id' => 1,
             'title' => 'Политика',
@@ -40,7 +40,7 @@ class Controller extends BaseController
         ],
         [
             'id' => 6,
-            'title' => 'Туризма',
+            'title' => 'Туризм',
             'description' => 'Все новости туризма'
         ]
     ];
@@ -78,6 +78,11 @@ class Controller extends BaseController
         }
 
         return $news;
+    }
+
+    public function getCategories(): array
+    {
+        return $this->categories;
     }
 
 }
