@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use function GuzzleHttp\Promise\all;
 
 class CategoryController extends Controller
 {
@@ -28,6 +29,7 @@ class CategoryController extends Controller
     public function create()
     {
         //
+        return view('admin.categories.create');
     }
 
     /**
@@ -39,6 +41,11 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+           'title' => ['required', 'string', 'min: 5', 'max: 155']
+        ]);
+
+        return response()->json($request->only('title', 'description'));
     }
 
     /**
