@@ -1,6 +1,7 @@
 @extends('layouts.admin')
+@section('title') Категории @endsection
 @section('content')
-    <h2>Категории</h2>
+    <a  class="btn btn-outline-secondary mb-2" href="{{ route('admin.categories.create') }}">Добавить категорию</a>
     <div class="table-responsive">
         <table class="table table-striped table-sm">
             <thead>

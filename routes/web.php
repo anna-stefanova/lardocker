@@ -24,6 +24,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::get('/hello/{name}', function (string $name) {
    return "hello, $name";
 });
@@ -48,6 +49,8 @@ Route::get('/categories/{id}', [CategoryController::class, 'show'])
     ->where('id', '\d+')
     ->name('categories.show');
 
-//about routes
-Route::get('/contact', [ContactController::class, 'index'])
-    ->name('contact.index');
+//contacts routes
+
+Route::resource('contact', ContactController::class)->only([
+    'index', 'store'
+]);

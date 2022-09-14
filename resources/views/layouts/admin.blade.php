@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard Template · Bootstrap v5.2</title>
+    <title>NewsRoom Панель управления</title>
 
     <link href="{{ asset('assets/lib/bootstrap-5.2.min.css') }}" rel="stylesheet">
 
@@ -76,7 +76,7 @@
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Панель управления</h1>
+                <h1 class="h2">@section('title') @show</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group me-2">
                         <button type="button" class="btn btn-sm btn-outline-secondary">Поделиться</button>

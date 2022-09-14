@@ -28,16 +28,16 @@
         <div class="collapse navbar-collapse justify-content-between px-0 px-lg-3" id="navbarCollapse">
             <div class="navbar-nav mr-auto py-0">
                 <a href="#" class="nav-item nav-link">Главная</a>
-                <a href="{{ route('news.index') }}" class="nav-item nav-link active">Все новости</a>
+                <a href="{{ route('news.index') }}" class="nav-item nav-link @if(request()->routeIs('news.index')) active @endif">Все новости</a>
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Категории</a>
+                    <a href="#" class="nav-link dropdown-toggle @if(request()->is('categories/*')) active @endif" data-toggle="dropdown">Категории</a>
                     <div class="dropdown-menu rounded-0 m-0">
                         @foreach($categories as $category)
                             <a href="{{ route('categories.show', ['id' => $category['id']]) }}" class="dropdown-item">{{ $category['title'] }}</a>
                         @endforeach
                     </div>
                 </div>
-                <a href="{{ route('contact.index') }}" class="nav-item nav-link">Контакты</a>
+                <a href="{{ route('contact.index') }}" class="nav-item nav-link @if(request()->routeIs('contact.index')) active @endif">Контакты</a>
             </div>
             <div class="input-group ml-auto" style="width: 100%; max-width: 300px;">
                 <input type="text" class="form-control" placeholder="Поиск">
