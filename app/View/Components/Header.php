@@ -3,12 +3,11 @@
 namespace App\View\Components;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\View\Component;
 
 class Header extends Component
 {
-
-    public array $categories;
     /**
      * Create a new component instance.
      *
@@ -16,9 +15,6 @@ class Header extends Component
      */
     public function __construct()
     {
-        //
-        $content = new Controller();
-        $this->categories = $content->getCategories();
     }
 
     /**
@@ -29,7 +25,7 @@ class Header extends Component
     public function render()
     {
         return view('components.header', [
-            'categories' => $this->categories,
+            'categories' => Category::query()->get(),
         ]);
     }
 }

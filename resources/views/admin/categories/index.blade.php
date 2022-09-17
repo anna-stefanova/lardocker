@@ -3,6 +3,7 @@
 @section('content')
     <a  class="btn btn-outline-secondary mb-2" href="{{ route('admin.categories.create') }}">Добавить категорию</a>
     <div class="table-responsive">
+        @include('inc.message')
         <table class="table table-striped table-sm">
             <thead>
             <tr>
@@ -27,5 +28,6 @@
             @endforelse
             </tbody>
         </table>
+        {{ $categories->links() }}
     </div>
 @endsection

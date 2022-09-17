@@ -3,14 +3,17 @@
 @section('content')
     <div class="row">
         <div class="col-lg-7 col-md-12 col-sm-12">
-            <form method="post" action="{{ route('admin.categories.store') }}">
+            @include('inc.message')
+            <form method="post" action="{{ route('admin.categories.update', ['category' => $category]) }}">
+                @csrf
+                @method('put')
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Наименование</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <label for="title" class="form-label">Наименование</label>
+                    <input type="text" name="title" class="form-control" id="title" aria-describedby="Category title" value="{{ $category->title }}">
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Описание</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <label for="description" class="form-label">Описание</label>
+                    <textarea name="description" class="form-control" id="description" rows="3">{!! $category->description !!}</textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Отправить</button>
             </form>

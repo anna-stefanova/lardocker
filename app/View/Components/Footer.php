@@ -2,13 +2,14 @@
 
 namespace App\View\Components;
 
-use App\Http\Controllers\Controller;
+use App\Models\Category;
+use Closure;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\Component;
 
 class Footer extends Component
 {
-
-    public array $categories;
     /**
      * Create a new component instance.
      *
@@ -16,20 +17,17 @@ class Footer extends Component
      */
     public function __construct()
     {
-        //
-        $content = new Controller();
-        $this->categories = $content->getCategories();
     }
 
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
+     * @return View|string|Closure
      */
-    public function render()
+    public function render(): View|string|Closure
     {
         return view('components.footer', [
-            'categories' => $this->categories,
+            'categories' => Category::query()->get(),
         ]);
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
 
 class News extends Model
@@ -14,13 +16,20 @@ class News extends Model
     public const ACTIVE = "ACTIVE";
     public const BLOCKED = "BLOCKED";
 
-    public function getNews()
+    protected $table = 'news';
+    public static $selectedFields = ['id', 'title', 'description', 'created_at', 'author', 'status'];
+
+    protected $fillable = ['category_id', 'title', 'slug', 'author', 'status', 'image', 'description'];
+
+    public function scopeStatus(Builder $query): Builder
     {
-        dd('getNews');
+        return $query->where('status', News::ACTIVE)
+            ->orWhere('status', News::DRAFT);
     }
 
-    public function getNewsById(int $id)
+    public function category(): BelongsTo
     {
-        dd('getNewsById');
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
+
 }
