@@ -3,22 +3,22 @@
     <div class="col-lg-8">
         <!-- News Detail Start -->
         <div class="position-relative mb-3">
-            <img class="img-fluid w-100" src="{{ asset('assets/img/news-700x435-2.jpg') }}" style="object-fit: cover;">
+            <img class="img-fluid w-100" src="{{ asset('/assets/img/news-500x280-4.jpg') }}" style="object-fit: cover;">
             <div class="overlay position-relative bg-light">
                 <div class="mb-3">
                 @foreach($categories as $category)
-                    @if($category['id'] === $news['category_id'])
-                        <a href="{{route('categories.show', ['id' => $category['id']])}}">{{ $category['title'] }}</a>
+                    @if($category->id === $news->category_id)
+                        <a href="{{route('categories.show', $category->id)}}">{{ $category->title }}</a>
                     @endif
                 @endforeach
                     <span class="px-1">/</span>
-                    <span>{{ $news['author'] }}</span>
+                    <span>{{ $news->author }}</span>
                     <span class="px-1">/</span>
-                    <span>{{$news['created_at']->format('d-m-Y H:i')}}</span>
+                    <span>{{$news->created_at}}</span>
                 </div>
                 <div>
-                    <h3 class="mb-3">{{ $news['title'] }}</h3>
-                    {!! $news['description'] !!}
+                    <h3 class="mb-3">{{ $news->title }}</h3>
+                    {!! $news->description !!}
                 </div>
             </div>
         </div>

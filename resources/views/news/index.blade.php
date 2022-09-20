@@ -9,15 +9,15 @@
                         <div class="overlay position-relative bg-light">
                             <div class="mb-2" style="font-size: 14px;">
                                 @foreach($categories as $category)
-                                    @if($category['id'] === $news['category_id'])
-                                        <a href="{{route('categories.show', ['id' => $category['id']])}}">{{ $category['title'] }}</a>
+                                    @if($category->id === $news->category_id)
+                                        <a href="{{route('categories.show', $category->id)}}">{{ $category->title }}</a>
                                     @endif
                                 @endforeach
                                 <span class="px-1">/</span>
-                                <span>{{ $news['created_at']->format('d-m-Y H:i') }}</span>
+                                <span>{{ $news->created_at }}</span>
                             </div>
-                            <a class="h4" href="{{ route('news.show', ['id' => $key]) }}">{{ $news['title'] }}</a>
-                            <p class="m-0">{!! $news['description'] !!}</p>
+                            <a class="h4" href="{{ route('news.show', $news->id) }}">{{ $news->title }}</a>
+                            <p class="m-0">{!! $news->description !!}</p>
                         </div>
                     </div>
                 </div>

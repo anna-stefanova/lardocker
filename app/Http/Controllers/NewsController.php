@@ -2,44 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\News;
+use Illuminate\Database\Eloquent\Collection;
+
 
 class NewsController extends Controller
 {
-    private $news;
 
+    protected array|Collection $categories;
 
     /**
-     * @param $news
+     * @return void
      */
     public function __construct()
     {
-        $this->news = $this->getNews();
+        $this->categories = Category::query()->get();
     }
 
 
-    public function index()
+    public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-        // list all news
-
-        $news = $this->getNews();
-        $categories = $this->categories;
+        // list all new
 
         return view('news.index', [
-            'categories' => $categories,
-            'newsList' => $news,
+            'categories' => $this->categories,
+            'newsList' => News::query()->paginate(config('pagination.news')),
         ]);
     }
 
     public function show(int $id)
     {
-
-        $categories = $this->categories;
-        $news = $this->getNews($id);
         // return current news
+
         return view('news.show', [
-            'categories' => $categories,
-            'news' => $news,
+            'categories' => $this->categories,
+            'news' => News::query()->find($id),
         ]);
     }
 }
