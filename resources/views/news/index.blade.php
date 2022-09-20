@@ -2,17 +2,13 @@
 @section('content')
     <div class="col-lg-8">
         <div class="row">
-            @forelse($newsList as $key => $news)
+            @forelse($newsList as $news)
                 <div class="col-lg-6">
                     <div class="position-relative mb-3">
                         <img class="img-fluid w-100" src="{{asset('assets/img/news-500x280-4.jpg')}}" style="object-fit: cover;">
                         <div class="overlay position-relative bg-light">
                             <div class="mb-2" style="font-size: 14px;">
-                                @foreach($categories as $category)
-                                    @if($category->id === $news->category_id)
-                                        <a href="{{route('categories.show', $category->id)}}">{{ $category->title }}</a>
-                                    @endif
-                                @endforeach
+                                <a href="{{route('categories.show', $news->category_id)}}">{{ $news->category->title }}</a>
                                 <span class="px-1">/</span>
                                 <span>{{ $news->created_at }}</span>
                             </div>

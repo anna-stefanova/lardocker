@@ -3,15 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\News\CreateRequest;
 use App\Models\Category;
 use App\Models\News;
 use App\Queries\NewsQueryBuilder;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class NewsController extends Controller
 {
@@ -32,7 +36,7 @@ class NewsController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -46,28 +50,28 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param CreateRequest $request
      * @param NewsQueryBuilder $builder
      * @return RedirectResponse
      */
-    public function store(Request $request, NewsQueryBuilder $builder): RedirectResponse
+    public function store(CreateRequest $request, NewsQueryBuilder $builder): RedirectResponse
     {
         $news = $builder->create(
-            \request()->only('title', 'author', 'description', 'category_id', 'image', 'status')
+            $request->validated()
         );
 
         if ($news->save()) {
             return redirect()->route('admin.news.index')
-                ->with('success', 'Запись успешно добавлена');
+                ->with('success', __('messages.admin.news.create.success'));
         }
-        return back('error', 'Не удалось добавить запись');
+        return back('error', __('messages.admin.news.create.fail'));
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -78,9 +82,9 @@ class NewsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function edit(News $news)
+    public function edit(News $news): Application|Factory|View
     {
         //
         $categories = Category::query()->get();
@@ -102,22 +106,29 @@ class NewsController extends Controller
     {
         if($builder->update($news, \request()->only('title', 'author', 'description', 'category_id', 'image', 'status'))) {
             return redirect()->route('admin.news.index')
-                ->with('success', 'Запись успешно обновлена');
+                ->with('success', __('messages.admin.news.edit.success'));
         }
-        return back()->with('error', 'Не удалось обновить запись');
+        return back()->with('error', __('messages.admin.news.edit.fail'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param News $news
-     * @return RedirectResponse
+     * @return JsonResponse
      */
-    public function destroy(News $news): RedirectResponse|string
+    public function destroy(News $news): JsonResponse
     {
-        return '1';
-        /*return redirect()->route('admin.news.index')
-                ->with('success', 'Запись успешно удалена');*/
+        try {
+            $deleted = $news->delete();
+            if ($deleted === false) {
+                return \response()->json(['status' => 'error'], 400);
+            }
 
+            return \response()->json(['ok']);
+        } catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            return \response()->json(['status' => 'error'], 400);
+        }
     }
 }

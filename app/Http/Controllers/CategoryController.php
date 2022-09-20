@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -9,31 +11,13 @@ class CategoryController extends Controller
 
     public function show(int $id)
     {
+
+
         return view('categories.show', [
-            'category' => $this->getCategory($id),
-            'newsList' => $this->getNewsByCategory($id),
+            'category' => Category::find($id),
+            'newsList' => News::query()->where('category_id', '=', $id)->get()
         ]);
     }
 
-    private function getCategory(int $id)
-    {
-        $categories = $this->categories;
-        foreach ($categories as $category) {
-            if ($category['id'] === $id) {
-                return $category;
-            }
-        }
-    }
-
-    private function getNewsByCategory(int $id): array
-    {
-        $newsByCategory = [];
-        foreach ($this->getNews() as $news) {
-            if ($news['category_id'] === $id) {
-                $newsByCategory[] = $news;
-            }
-        };
-        return $newsByCategory;
-    }
 
 }

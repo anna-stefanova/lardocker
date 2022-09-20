@@ -3,11 +3,7 @@
 @section('content')
     <div class="row">
         <div class="col-lg-7 col-md-12 col-sm-12">
-            @if($errors->any())
-                @foreach($errors->all() as $error)
-                    @include('inc.message', ['message' => $error])
-                @endforeach
-            @endif
+            @include('inc.message')
             <form method="post" action="{{ route('admin.news.update', ['news' => $news]) }}">
                 @csrf
                 @method('put')
@@ -28,7 +24,7 @@
                     <select class="form-select" name="category_id" id="category_id">
                         <option>Выбрать категорию</option>
                         @forelse($categories as $category)
-                            <option value="{{ $category->id }}" @if($news->category_id === $category->id) selected @endif>{{ $category->title }}</option>
+                            <option value="{{ $category->id }}" @if((int)$news->category_id === $category->id) selected @endif>{{ $category->title }}</option>
                         @empty
                             <option value="0">Категорий нет</option>
                         @endforelse

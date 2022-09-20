@@ -11,12 +11,12 @@
             <form method="post" action="{{ route('admin.categories.store') }}">
                 @csrf
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Наименование</label>
-                    <input name="title" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ old('title') }}">
+                    <label for="title" class="form-label">Наименование</label>
+                    <input name="title" type="text" class="form-control" id="title" required aria-describedby="emailHelp" value="{{ old('title') }}">
                 </div>
                 <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Описание</label>
-                    <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="3">{!! old('description') !!}</textarea>
+                    <label for="description" class="form-label">Описание</label>
+                    <textarea name="description" class="form-control" id="description" rows="3">{!! old('description') !!}</textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Отправить</button>
             </form>
