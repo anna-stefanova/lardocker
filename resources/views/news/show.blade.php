@@ -6,11 +6,7 @@
             <img class="img-fluid w-100" src="{{ asset('/assets/img/news-500x280-4.jpg') }}" style="object-fit: cover;">
             <div class="overlay position-relative bg-light">
                 <div class="mb-3">
-                @foreach($categories as $category)
-                    @if($category->id === $news->category_id)
-                        <a href="{{route('categories.show', $category->id)}}">{{ $category->title }}</a>
-                    @endif
-                @endforeach
+                    <a href="{{route('categories.show', $news->category_id)}}">{{ $news->category->title }}</a>
                     <span class="px-1">/</span>
                     <span>{{ $news->author }}</span>
                     <span class="px-1">/</span>

@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Categories\CreateRequest;
+use App\Http\Requests\Categories\EditRequest;
 use App\Models\Category;
-use App\Models\News;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use function GuzzleHttp\Promise\all;
 
 class CategoryController extends Controller
@@ -29,7 +31,7 @@ class CategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -40,15 +42,11 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param CreateRequest $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request): RedirectResponse
     {
-        //
-        $request->validate([
-           'title' => ['required', 'string', 'min: 5', 'max: 155']
-        ]);
 
         /*$data = $request->only('title', 'description');*/
         /* 3) Еще один способ добавления данных в базу данных через метод create() и передавать в него какие-то данные */
@@ -67,23 +65,23 @@ class CategoryController extends Controller
         /* 2) Массовое сохранение - мы сразу передаем свойства в конструктор модели */
 
         $category = new Category(
-            $request->only(['title', 'description'])
+            $request->validated()
         );
 
         if ($category->save()) {
             return redirect()->route('admin.categories.index')
-                ->with('success', 'Запись успешно добавлена');
+                ->with('success', __('messages.admin.category.create.success'));
         }
 
 
-        return back()->with('error', 'Не удалось добавить запись');
+        return back()->with('error', __('messages.admin.category.create.fail'));
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
@@ -107,28 +105,27 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Category $category
+     * @param EditRequest $request
+     * @param Category $category
      * @return RedirectResponse
      */
-    public function update(Request $request, Category $category)
+    public function update(EditRequest $request, Category $category): RedirectResponse
     {
-        $category->title = $request->input('title');
-        $category->description = $request->input('description');
+        $category->fill($request->validated());
 
         if ($category->save()) {
             return redirect()->route('admin.categories.index')
-                ->with('success', 'Категория успешно обновлена');
+                ->with('success', __('messages.admin.category.edit.success'));
         }
 
-        return back()->with('error', 'Не удалось обновить категорию');
+        return back()->with('error', __('messages.admin.category.edit.fail'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

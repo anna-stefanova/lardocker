@@ -11,8 +11,9 @@
             <form method="post" action="{{ route('admin.news.store') }}">
                 @csrf
                 <div class="mb-3">
-                    <label for="title" class="form-label">Наименование</label>
+                    <label for="title" class="form-label">Заголовок</label>
                     <input name="title" id="title" type="text" class="form-control" aria-describedby="emailHelp" value="{{ old('title') }}">
+                    @error('title')<span style="color:red;">{{ $message }}</span>@enderror
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Описание</label>
@@ -20,14 +21,14 @@
                 </div>
                 <div class="mb-3">
                     <label for="author" class="form-label">Автор</label>
-                    <input name="author" id="author" type="text" class="form-control">
+                    <input name="author" id="author" type="text" class="form-control" value="{{ old('author') }}">
                 </div>
                 <div class="mb-3">
                     <label for="category_id" class="form-label"></label>
                     <select class="form-select" name="category_id" id="category_id">
                         <option>Выбрать категорию</option>
                         @forelse($categories as $category)
-                            <option value="{{ $category->id }}" @if(old('category_id') === $category->id) selected @endif>{{ $category->title }}</option>
+                            <option value="{{ $category->id }}" @if((int)old('category_id') === $category->id) selected @endif>{{ $category->title }}</option>
                         @empty
                             <option value="0">Категорий нет</option>
                         @endforelse

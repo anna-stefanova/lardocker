@@ -31,7 +31,7 @@ class Sidebar extends Component
     {
         return view('components.sidebar', [
             'categories' => Category::query()->get(),
-            'newsList' => News::query()->get(),
+            'newsList' => News::query()->with('category')->get(),
         ]);
     }
 }
