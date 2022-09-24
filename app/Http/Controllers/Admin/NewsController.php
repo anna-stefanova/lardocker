@@ -125,7 +125,7 @@ class NewsController extends Controller
                 return \response()->json(['status' => 'error'], 400);
             }
 
-            return \response()->json(['ok']);
+            return \response()->json(['status' => 'success']);
         } catch (\Exception $e) {
             \Log::error($e->getMessage());
             return \response()->json(['status' => 'error'], 400);
